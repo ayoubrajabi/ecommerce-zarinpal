@@ -17,7 +17,7 @@ final itemRailData = <ItemsRail>[
         'https://dkstatics-public.digikala.com/digikala-products/117122414.jpg?x-oss-process=image/resize,m_lfit,h_600,w_600/quality,q_90',
   ),
   ItemsRail(
-    name: 'کفش-روزمره',
+    name: 'کفش روزمره',
     url:
         'https://dkstatics-public.digikala.com/digikala-categories/02189f2961e37f38e1f4a085b2e4e0a23545c003_1621778712.jpg',
   ),

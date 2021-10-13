@@ -17,7 +17,7 @@ class NavScreen extends StatelessWidget {
           builder: (context, navIndex) => IndexedStack(
             index: navIndex,
             children: [
-              MainScreen(),
+              const MainScreen(),
               Container(
                 color: Colors.blue,
               ),
