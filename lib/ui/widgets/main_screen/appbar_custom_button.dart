@@ -7,12 +7,14 @@ class AppBarCustomButton extends StatelessWidget {
     @required this.color,
     @required this.iconColor,
     @required this.margin,
+    this.onPressed,
   }) : super(key: key);
 
   final IconData? icon;
   final Color? color;
   final Color? iconColor;
   final EdgeInsetsGeometry? margin;
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class AppBarCustomButton extends StatelessWidget {
             color: Colors.black12,
           )),
       child: IconButton(
-        onPressed: () {},
+        onPressed: onPressed,
         icon: Icon(
           icon,
           color: iconColor,

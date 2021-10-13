@@ -1,11 +1,12 @@
 import 'package:ecommerce_zarinpal/data/model/tshirt_model.dart';
+import 'package:ecommerce_zarinpal/ui/screens/product_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 import '../widgets.dart';
 
-class TshirtCardWidget extends StatefulWidget {
+class TshirtCardWidget extends StatelessWidget {
   const TshirtCardWidget({
     Key? key,
     this.tshirtInfo,
@@ -14,14 +15,14 @@ class TshirtCardWidget extends StatefulWidget {
   final TshirtModel? tshirtInfo;
 
   @override
-  State<TshirtCardWidget> createState() => _TshirtCardWidgetState();
-}
-
-class _TshirtCardWidgetState extends State<TshirtCardWidget> {
-  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProductDetailScreen(tshirtInfo: tshirtInfo),
+        ),
+      ),
       child: Container(
         margin: const EdgeInsets.all(15.0),
         decoration: BoxDecoration(
@@ -42,7 +43,7 @@ class _TshirtCardWidgetState extends State<TshirtCardWidget> {
                   borderRadius: BorderRadius.circular(10.0),
                   child: FadeInImage.memoryNetwork(
                     placeholder: kTransparentImage,
-                    image: widget.tshirtInfo!.imageUrl!,
+                    image: tshirtInfo!.imageUrl!,
                     fit: BoxFit.contain,
                     width: double.infinity,
                     height: 230,
@@ -57,7 +58,7 @@ class _TshirtCardWidgetState extends State<TshirtCardWidget> {
               ],
             ),
             Text(
-              widget.tshirtInfo!.name!,
+              tshirtInfo!.name!,
               style: const TextStyle(
                 fontSize: 11.0,
               ),
@@ -73,7 +74,7 @@ class _TshirtCardWidgetState extends State<TshirtCardWidget> {
                     color: Colors.grey.shade200,
                     borderRadius: BorderRadius.circular(10.0)),
                 child: Text(
-                  '${widget.tshirtInfo!.price!} تومان',
+                  '${tshirtInfo!.price!} تومان',
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 12.0,
