@@ -3,29 +3,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconly/iconly.dart';
 
+import 'screens.dart';
+
 class NavScreen extends StatelessWidget {
   const NavScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocBuilder<NavbarCubit, int>(
-        builder: (context, navIndex) => IndexedStack(
-          index: navIndex,
-          children: [
-            Container(
-              color: Colors.green,
-            ),
-            Container(
-              color: Colors.blue,
-            ),
-            Container(
-              color: Colors.yellow,
-            ),
-          ],
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        body: BlocBuilder<NavbarCubit, int>(
+          builder: (context, navIndex) => IndexedStack(
+            index: navIndex,
+            children: [
+              MainScreen(),
+              Container(
+                color: Colors.blue,
+              ),
+              Container(
+                color: Colors.yellow,
+              ),
+            ],
+          ),
         ),
+        bottomNavigationBar: CustomNavigationBar(),
       ),
-      bottomNavigationBar: CustomNavigationBar(),
     );
   }
 }
@@ -36,7 +39,7 @@ class CustomNavigationBar extends StatelessWidget {
   final List<IconData>? _itemIcons = [
     IconlyLight.home,
     IconlyLight.heart,
-    IconlyLight.bag,
+    IconlyLight.buy,
   ];
 
   @override
