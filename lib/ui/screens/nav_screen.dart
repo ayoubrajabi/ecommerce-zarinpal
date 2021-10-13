@@ -36,11 +36,11 @@ class NavScreen extends StatelessWidget {
 class CustomNavigationBar extends StatelessWidget {
   CustomNavigationBar({Key? key}) : super(key: key);
 
-  final List<IconData>? _itemIcons = [
-    IconlyLight.home,
-    IconlyLight.heart,
-    IconlyLight.buy,
-  ];
+  final _itemIcons = <IconData, IconData>{
+    IconlyLight.home: IconlyBold.home,
+    IconlyLight.heart: IconlyBold.heart,
+    IconlyLight.buy: IconlyBold.buy,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -55,14 +55,19 @@ class CustomNavigationBar extends StatelessWidget {
         unselectedItemColor: _bottomNavigationTheme.unselectedItemColor,
         currentIndex: navIndex,
         onTap: (index) => context.read<NavbarCubit>().emit(index),
-        items: _itemIcons!
+        items: _itemIcons
             .map(
-              (icon) => BottomNavigationBarItem(
-                  icon: Icon(
-                    icon,
-                  ),
-                  label: ''),
+              (icon, activIcon) => MapEntry(
+                icon,
+                BottomNavigationBarItem(
+                    icon: Icon(
+                      icon,
+                    ),
+                    activeIcon: Icon(activIcon),
+                    label: ''),
+              ),
             )
+            .values
             .toList(),
       ),
     );
