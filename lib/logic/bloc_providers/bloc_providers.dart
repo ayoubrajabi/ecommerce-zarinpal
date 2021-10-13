@@ -6,6 +6,9 @@ class BlocProvidersList {
     BlocProvider<NavbarCubit>(
       create: (_) => NavbarCubit(),
     ),
+    BlocProvider<AddToBagCubit>(
+      create: (_) => AddToBagCubit(),
+    ),
   ];
 
   List<BlocProvider> get blocProviders => _blocProviders;

@@ -19,11 +19,9 @@ class NavScreen extends StatelessWidget {
             children: [
               const MainScreen(),
               Container(
-                color: Colors.blue,
+                color: Colors.white,
               ),
-              Container(
-                color: Colors.yellow,
-              ),
+              CartScreen(),
             ],
           ),
         ),

@@ -84,7 +84,9 @@ class ProductDetailScreen extends StatelessWidget {
                     ),
                     const SelectProductSize(),
                     const ProductTabView(),
-                    const AddToCardButton(),
+                    AddToCardButton(
+                      tshirtInfo: tshirtInfo,
+                    ),
                   ],
                 ),
               ),

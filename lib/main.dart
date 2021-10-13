@@ -18,7 +18,14 @@ class EcommerceApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: _blocProvidersList.blocProviders,
+      providers: [
+        BlocProvider<NavbarCubit>(
+          create: (context) => NavbarCubit(),
+        ),
+        BlocProvider<AddToBagCubit>(
+          create: (context) => AddToBagCubit(),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: _appTheme.theme(),
