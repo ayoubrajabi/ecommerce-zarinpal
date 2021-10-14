@@ -1,4 +1,6 @@
+import 'package:ecommerce_zarinpal/logic/logic.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solid_bottom_sheet/solid_bottom_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zarinpal/zarinpal.dart';
@@ -80,37 +82,50 @@ class CustomBottomSheet extends StatelessWidget {
           child: Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
-            child: ElevatedButton(
-              onPressed: () {
-                PaymentRequest _paymentRequest = PaymentRequest();
-                _paymentRequest.setIsSandBox(true);
-                _paymentRequest
-                    .setMerchantID("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
-                _paymentRequest.setAmount(10000);
-                _paymentRequest.setDescription('خرید تی شرت');
-                _paymentRequest.setCallbackURL('zar://zarinpal.app');
+            child: BlocBuilder<StartPaymentBloc, StartPaymentState>(
+              builder: (context, state) {
+                return ElevatedButton(
+                  onPressed: () async {
+                    PaymentRequest _paymentRequest = PaymentRequest();
+                    _paymentRequest.setIsSandBox(true);
+                    _paymentRequest
+                        .setMerchantID("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
+                    _paymentRequest.setAmount(10000);
+                    _paymentRequest.setDescription('خرید تی شرت');
+                    _paymentRequest.setCallbackURL('zar://zarinpal.app');
 
-                ZarinPal().startPayment(_paymentRequest,
-                    (status, paymentGatewayUri) async {
-                  await canLaunch(paymentGatewayUri!)
-                      ? await launch(paymentGatewayUri)
-                      : throw 'Could not launch url';
-                });
-              },
-              child: Text(
-                'پرداخت با زرین پال',
-                style: TextStyle(
-                  color: _theme.primaryColor,
-                ),
-              ),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.amber),
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+                    context
+                        .read<StartPaymentBloc>()
+                        .add(Start(_paymentRequest));
+
+                    context
+                        .read<PaymentRequestCubit>()
+                        .getPaymentRequest(_paymentRequest);
+
+                    if (state is PaymentIsLoaded) {
+                      await canLaunch(state.url!)
+                          ? await launch(state.url!)
+                          : throw 'Could not launch url';
+                    }
+                  },
+                  child: state is PaymentIsLoading
+                      ? const CircularProgressIndicator()
+                      : Text(
+                          'پرداخت با زرین پال',
+                          style: TextStyle(
+                            color: _theme.primaryColor,
+                          ),
+                        ),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.amber),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                    ),
                   ),
-                ),
-              ),
+                );
+              },
             ),
           ),
         ),

@@ -1,7 +1,8 @@
+import 'package:ecommerce_zarinpal/logic/logic.dart';
 import 'package:flutter/material.dart';
-import 'package:zarinpal/zarinpal.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CheckoutScreen extends StatelessWidget {
+class CheckoutScreen extends StatefulWidget {
   final String? status;
   final String? authority;
 
@@ -12,41 +13,51 @@ class CheckoutScreen extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<CheckoutScreen> createState() => _CheckoutScreenState();
+}
+
+class _CheckoutScreenState extends State<CheckoutScreen> {
+  @override
+  void initState() {
+    final _paymentRequest = context.read<PaymentRequestCubit>().state;
+    context
+        .read<VerifyPaymentBloc>()
+        .add(StartVerify(_paymentRequest, widget.authority, widget.status));
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: Center(
-              child: Column(
-        children: [
-          Text('status of payment is:  $status'),
-          Text('authority of payment is:  $authority'),
-          ElevatedButton(
-            onPressed: () {
-              PaymentRequest _paymentRequest = PaymentRequest();
-              _paymentRequest.setIsSandBox(true);
-              _paymentRequest.setAmount(10000);
-              _paymentRequest
-                  .setMerchantID("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
-              _paymentRequest.setAuthority(authority);
+        body: BlocBuilder<VerifyPaymentBloc, VerifyPaymentState>(
+          builder: (context, verifyState) {
+            if (verifyState is VerifyIsLoded) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Text('status of payment is:  ${widget.status}'),
+                  // Text('authority of payment is:  ${widget.authority}'),
+                  Text('status of payment is:  ${widget.status}'),
+                  Text('authority of payment is:  ${widget.authority}'),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Text('test'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Text('test2'),
+                  ),
+                ],
+              );
+            }
 
-              ZarinPal()
-                  .verificationPayment(status!, authority!, _paymentRequest,
-                      (isSucsses, refID, paymentRequest) {
-                print(refID);
-                print(isSucsses);
-              });
-            },
-            child: Text('test'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              print(status);
-              print(authority);
-            },
-            child: Text('test2'),
-          ),
-        ],
-      ))),
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        ),
+      ),
     );
   }
 }

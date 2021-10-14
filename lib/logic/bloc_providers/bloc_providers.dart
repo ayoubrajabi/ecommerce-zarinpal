@@ -1,4 +1,5 @@
 import 'package:ecommerce_zarinpal/logic/cubits/cubits.dart';
+import 'package:ecommerce_zarinpal/logic/logic.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BlocProvidersList {
@@ -8,6 +9,15 @@ class BlocProvidersList {
     ),
     BlocProvider<AddToBagCubit>(
       create: (_) => AddToBagCubit(),
+    ),
+    BlocProvider<PaymentRequestCubit>(
+      create: (_) => PaymentRequestCubit(),
+    ),
+    BlocProvider<StartPaymentBloc>(
+      create: (_) => StartPaymentBloc(),
+    ),
+    BlocProvider<VerifyPaymentBloc>(
+      create: (_) => VerifyPaymentBloc(),
     ),
   ];
 
