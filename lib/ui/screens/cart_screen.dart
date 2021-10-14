@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconly/iconly.dart';
 import 'package:solid_bottom_sheet/solid_bottom_sheet.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:zarinpal/zarinpal.dart';
 
 class CartScreen extends StatefulWidget {
@@ -48,6 +49,7 @@ class _CartScreenState extends State<CartScreen> {
           children: [
             SingleChildScrollView(
               controller: ScrollController(),
+              physics: const BouncingScrollPhysics(),
               child: BlocBuilder<AddToBagCubit, List<TshirtModel>>(
                 builder: (context, state) {
                   return SizedBox(
@@ -196,7 +198,7 @@ class _CartScreenState extends State<CartScreen> {
               left: 0.0,
               right: 0.0,
               child: SolidBottomSheet(
-                maxHeight: 100.0,
+                maxHeight: 90.0,
                 elevation: 60.0,
                 autoSwiped: true,
                 draggableBody: false,
@@ -252,9 +254,6 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                         ],
                       ),
-                      const Divider(
-                        color: Colors.white10,
-                      ),
                     ],
                   ),
                 ),
@@ -272,13 +271,15 @@ class _CartScreenState extends State<CartScreen> {
                         _paymentRequest.setMerchantID(
                             "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
                         _paymentRequest.setAmount(10000);
-                        _paymentRequest.setDescription('test');
-                        _paymentRequest.setCallbackURL('https://google.com');
+                        _paymentRequest.setDescription('خرید تی شرت');
+                        _paymentRequest.setCallbackURL('zar://zarinpal.app');
 
-                        ZarinPal().startPayment(
-                            _paymentRequest,
-                            (status, paymentGatewayUri) =>
-                                print(paymentGatewayUri));
+                        ZarinPal().startPayment(_paymentRequest,
+                            (status, paymentGatewayUri) async {
+                          await canLaunch(paymentGatewayUri!)
+                              ? await launch(paymentGatewayUri)
+                              : throw 'Could not launch url';
+                        });
                       },
                       child: Text(
                         'پرداخت با زرین پال',

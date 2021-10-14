@@ -39,6 +39,8 @@ dependencies:
   iconly: ^1.0.1
   transparent_image: ^2.0.0
   solid_bottom_sheet: ^0.1.10
+  uni_links: ^0.5.1
+  url_launcher: ^6.0.12
 
 dev_dependencies:
   flutter_test:

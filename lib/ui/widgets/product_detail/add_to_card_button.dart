@@ -39,7 +39,8 @@ class AddToCardButton extends StatelessWidget {
               ),
             ),
             padding: MaterialStateProperty.all(
-                const EdgeInsets.symmetric(horizontal: 0.0, vertical: 30.0)),
+              const EdgeInsets.symmetric(vertical: 20.0),
+            ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

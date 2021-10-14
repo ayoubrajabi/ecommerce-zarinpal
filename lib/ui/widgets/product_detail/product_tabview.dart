@@ -29,7 +29,7 @@ class _ProductTabViewState extends State<ProductTabView>
       children: [
         TabBar(
           controller: _tabController,
-          padding: const EdgeInsets.only(left: 150.0, top: 15.0),
+          padding: const EdgeInsets.only(left: 150.0, top: 10.0),
           labelColor: Colors.orangeAccent,
           unselectedLabelColor: Colors.grey,
           labelStyle: const TextStyle(
@@ -39,11 +39,11 @@ class _ProductTabViewState extends State<ProductTabView>
           indicatorColor: Colors.orangeAccent,
           tabs: const [
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.only(bottom: 5.0),
               child: Text('توضیجات'),
             ),
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.only(bottom: 5.0),
               child: Text('بررسی'),
             ),
           ],
@@ -51,7 +51,7 @@ class _ProductTabViewState extends State<ProductTabView>
         Padding(
           padding: const EdgeInsets.only(top: 10.0),
           child: SizedBox(
-            height: 130.0,
+            height: 110.0,
             width: double.infinity,
             child: TabBarView(
               controller: _tabController,
