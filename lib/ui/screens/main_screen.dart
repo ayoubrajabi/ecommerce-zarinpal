@@ -11,6 +11,7 @@ class MainScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: _theme.scaffoldBackgroundColor,
       body: CustomScrollView(
+        controller: ScrollController(),
         slivers: [
           const CustomSliverAppBar(),
           SliverToBoxAdapter(

@@ -38,6 +38,7 @@ dependencies:
   zarinpal: ^1.0.4+1
   iconly: ^1.0.1
   transparent_image: ^2.0.0
+  solid_bottom_sheet: ^0.1.10
 
 dev_dependencies:
   flutter_test:
