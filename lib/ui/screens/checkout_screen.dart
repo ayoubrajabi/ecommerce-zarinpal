@@ -1,7 +1,9 @@
 import 'package:ecommerce_zarinpal/logic/logic.dart';
+import 'package:ecommerce_zarinpal/ui/screens/screens.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iconly/iconly.dart';
 
 class CheckoutScreen extends StatefulWidget {
   final String? status;
@@ -29,45 +31,25 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.amber,
+        statusBarIconBrightness: Brightness.dark,
+      ),
+    );
     return SafeArea(
       child: Scaffold(
         body: BlocBuilder<VerifyPaymentBloc, VerifyPaymentState>(
           builder: (context, verifyState) {
             if (verifyState is VerifyIsLoded) {
-              return Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: Card(
-                  elevation: 40.0,
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    side: const BorderSide(color: Colors.black12, width: 1.0),
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 130.0,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.amber,
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            Icon(
-                              IconlyLight.buy,
-                              size: 35.0,
-                            ),
-                            SizedBox(
-                              width: 40.0,
-                            ),
-                            Text('رسید خرید شما'),
-                          ],
-                        ),
-                      ),
-                      CircleAvatar(
+              return Container(
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    const Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.all(30.0),
+                      child: CircleAvatar(
                         backgroundColor: Colors.grey.shade50,
                         radius: 60.0,
                         child: const Icon(
@@ -76,69 +58,181 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           size: 70.0,
                         ),
                       ),
-                      const Divider(
-                        endIndent: 30.0,
-                        indent: 30.0,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text(
+                        'پرداخت اینترنتی شما با موفقیت انجام شد\n و با شماره ${widget.authority!.replaceRange(0, 30, '')} در سیستم ذخیره گردید',
+                        textAlign: TextAlign.right,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
-                            children: [
-                              Text(verifyState.refID.toString()),
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: const [
+                              Text('تاریخ:    1400/07/20'),
+                              SizedBox(
+                                width: 10.0,
+                              ),
                               Icon(
-                                Icons.card_membership,
-                                color: Colors.amber.shade200,
+                                CupertinoIcons.calendar,
+                                color: Colors.amber,
                               )
                             ],
                           ),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text(widget.authority!.replaceRange(0, 30, '')),
-                              Icon(
-                                Icons.verified,
-                                color: Colors.amber.shade200,
+                              Text('مبلغ:     ${verifyState.amount} تومان'),
+                              const SizedBox(
+                                width: 10.0,
+                              ),
+                              const Icon(
+                                CupertinoIcons.creditcard,
+                                color: Colors.amber,
                               )
                             ],
                           ),
                         ],
                       ),
-                      const Divider(
-                        endIndent: 30.0,
-                        indent: 30.0,
+                    ),
+                    const Divider(
+                      endIndent: 30.0,
+                      indent: 30.0,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text('کد رهگیری:  ${verifyState.refID}'),
+                          const Icon(
+                            Icons.card_membership,
+                            color: Colors.amber,
+                          )
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    const Divider(
+                      endIndent: 30.0,
+                      indent: 30.0,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                              'شناسه پرداخت:  ${widget.authority!.replaceRange(0, 30, '')}'),
+                          const Icon(
+                            Icons.verified,
+                            color: Colors.amber,
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 40.0,
+                    ),
+                    ElevatedButton(
+                      onPressed: () => Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const NavScreen(),
+                        ),
+                      ),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          Colors.amber,
+                        ),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                        ),
+                        padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(vertical: 20.0),
+                        ),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 70.0, vertical: 8.0),
+                        child: Text('بازگشت به صفحه اصلی'),
+                      ),
+                    ),
+                    const Spacer(),
+                  ],
                 ),
               );
-              // return Column(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Text('status of payment is:  ${widget.status}'),
-              //     Text('authority of payment is:  ${widget.authority}'),
-              //     Text(
-              //         'authority of payment is:  ${verifyState.isPaymentSuccess}'),
-              //     Text('authority of payment is:  ${verifyState.refID}'),
-              //     ElevatedButton(
-              //       onPressed: () {},
-              //       child: const Text('test'),
-              //     ),
-              //     ElevatedButton(
-              //       onPressed: () {},
-              //       child: const Text('test2'),
-              //     ),
-              //   ],
-              // );
             } else if (verifyState is VerifyError) {
-              return const SizedBox(
-                child: Center(
-                  child: Text('Error In Payment'),
-                ),
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.grey.shade50,
+                      radius: 60.0,
+                      child: const Icon(
+                        Icons.close,
+                        color: Colors.red,
+                        size: 70.0,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 40.0,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Text(
+                      'پرداخت اینترنتی شما با شکست مواجه شد',
+                      textAlign: TextAlign.right,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 40.0,
+                  ),
+                  ElevatedButton(
+                    onPressed: () => Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const NavScreen(),
+                      ),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                        Colors.amber,
+                      ),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                      ),
+                      padding: MaterialStateProperty.all(
+                        const EdgeInsets.symmetric(vertical: 20.0),
+                      ),
+                    ),
+                    child: const Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 70.0, vertical: 8.0),
+                      child: Text('بازگشت به صفحه اصلی'),
+                    ),
+                  ),
+                ],
               );
             }
 
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: Colors.amber,
+                strokeWidth: 2.0,
+              ),
             );
           },
         ),

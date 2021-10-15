@@ -21,7 +21,8 @@ Future<void> _verify(
       event.paymentRequest!,
       (isPaymentSuccess, refID, paymentRequest) => {
         if (isPaymentSuccess)
-          emit(VerifyIsLoded(isPaymentSuccess, refID))
+          emit(VerifyIsLoded(
+              isPaymentSuccess, refID, event.paymentRequest!.amount))
         else
           emit(VerifyError())
       },

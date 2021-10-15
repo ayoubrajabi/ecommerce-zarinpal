@@ -12,11 +12,12 @@ class MainScreen extends StatelessWidget {
       backgroundColor: _theme.scaffoldBackgroundColor,
       body: CustomScrollView(
         controller: ScrollController(),
+        physics: const BouncingScrollPhysics(),
         slivers: [
           const CustomSliverAppBar(),
           SliverToBoxAdapter(
             child: SizedBox(
-              height: itemRailData.length * 460.0,
+              height: itemRailData.length * 445.0,
               width: double.infinity,
               child: GridView.builder(
                 physics: const NeverScrollableScrollPhysics(),
@@ -25,7 +26,7 @@ class MainScreen extends StatelessWidget {
                   crossAxisSpacing: 0.0,
                   mainAxisSpacing: 0.0,
                   childAspectRatio: 1.0,
-                  mainAxisExtent: 365.0,
+                  mainAxisExtent: 350.0,
                 ),
                 itemCount: tshirtData.length,
                 itemBuilder: (context, index) {

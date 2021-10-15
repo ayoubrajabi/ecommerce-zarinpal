@@ -32,7 +32,7 @@ class _ItemsRailBarState extends State<ItemsRailBar> {
               decoration: BoxDecoration(
                 color: _info.name == itemRailData[indexSelected!].name
                     ? const Color(0xfffaeccd)
-                    : Colors.grey.shade50,
+                    : Colors.white,
                 borderRadius: BorderRadius.circular(7.0),
               ),
               child: Center(
@@ -40,7 +40,7 @@ class _ItemsRailBarState extends State<ItemsRailBar> {
                 _info.name!,
                 style: TextStyle(
                   color: _info.name == itemRailData[indexSelected!].name
-                      ? Colors.orange
+                      ? Colors.orange.shade700
                       : Colors.grey.shade400,
                 ),
               )),

@@ -1,5 +1,6 @@
 import 'package:ecommerce_zarinpal/logic/logic.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconly/iconly.dart';
 
@@ -10,22 +11,34 @@ class NavScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-        body: BlocBuilder<NavbarCubit, int>(
-          builder: (context, navIndex) => IndexedStack(
-            index: navIndex,
-            children: [
-              const MainScreen(),
-              Container(
-                color: Colors.white,
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.white,
+      statusBarIconBrightness: Brightness.dark,
+    );
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarColor: Colors.white,
+        statusBarIconBrightness: Brightness.dark,
+      ),
+      child: SafeArea(
+        child: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Scaffold(
+            body: BlocBuilder<NavbarCubit, int>(
+              builder: (context, navIndex) => IndexedStack(
+                index: navIndex,
+                children: [
+                  const MainScreen(),
+                  Container(
+                    color: Colors.white,
+                  ),
+                  CartScreen(),
+                ],
               ),
-              CartScreen(),
-            ],
+            ),
+            bottomNavigationBar: CustomNavigationBar(),
           ),
         ),
-        bottomNavigationBar: CustomNavigationBar(),
       ),
     );
   }
@@ -43,6 +56,7 @@ class CustomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _bottomNavigationTheme = Theme.of(context).bottomNavigationBarTheme;
+
     return BlocBuilder<NavbarCubit, int>(
       builder: (context, navIndex) => BottomNavigationBar(
         backgroundColor: _bottomNavigationTheme.backgroundColor,
