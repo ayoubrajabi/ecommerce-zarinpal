@@ -6,13 +6,21 @@ part 'start_payment_event.dart';
 part 'start_payment_state.dart';
 
 class StartPaymentBloc extends Bloc<StartPaymentEvent, StartPaymentState> {
-  StartPaymentBloc() : super(PaymentIsLoading()) {
-    on<Start>(
-      (event, emit) async {
-        ZarinPal().startPayment(event.paymentRequest!, (status, paymentUrl) {
-          emit(PaymentIsLoaded(paymentUrl));
-        });
-      },
-    );
+  StartPaymentBloc() : super(PaymentNotStarted()) {
+    on<Start>(_start);
+  }
+}
+
+Future<void> _start(
+    StartPaymentEvent event, Emitter<StartPaymentState> emit) async {
+  if (event is Start) {
+    emit(PaymentIsLoading());
+    return ZarinPal().startPayment(event.paymentRequest!, (status, paymentUrl) {
+      if (status == 100) {
+        emit(PaymentIsLoaded(paymentUrl));
+      } else {
+        emit(PaymentError());
+      }
+    });
   }
 }

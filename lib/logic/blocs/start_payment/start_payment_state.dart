@@ -5,6 +5,8 @@ abstract class StartPaymentState {}
 
 class StartPaymentInitial extends StartPaymentState {}
 
+class PaymentNotStarted extends StartPaymentState {}
+
 class PaymentIsLoading extends StartPaymentState {}
 
 class PaymentIsLoaded extends StartPaymentState {

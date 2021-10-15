@@ -36,10 +36,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Text('status of payment is:  ${widget.status}'),
-                  // Text('authority of payment is:  ${widget.authority}'),
                   Text('status of payment is:  ${widget.status}'),
                   Text('authority of payment is:  ${widget.authority}'),
+                  Text(
+                      'authority of payment is:  ${verifyState.isPaymentSuccess}'),
+                  Text('authority of payment is:  ${verifyState.refID}'),
                   ElevatedButton(
                     onPressed: () {},
                     child: const Text('test'),
@@ -49,6 +50,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     child: const Text('test2'),
                   ),
                 ],
+              );
+            } else if (verifyState is VerifyError) {
+              return const SizedBox(
+                child: Center(
+                  child: Text('Error In Payment'),
+                ),
               );
             }
 

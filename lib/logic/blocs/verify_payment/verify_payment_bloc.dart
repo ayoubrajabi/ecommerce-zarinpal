@@ -8,19 +8,23 @@ part 'verify_payment_state.dart';
 
 class VerifyPaymentBloc extends Bloc<VerifyPaymentEvent, VerifyPaymentState> {
   VerifyPaymentBloc() : super(VerifyIsLoding()) {
-    on<VerifyPaymentEvent>((event, emit) {
-      if (event is StartVerify) {
-        ZarinPal().verificationPayment(
-          event.status!,
-          event.authority!,
-          event.paymentRequest!,
-          (isPaymentSuccess, refID, paymentRequest) => {
-            emit(
-              VerifyIsLoded(isPaymentSuccess, refID),
-            ),
-          },
-        );
-      }
-    });
+    on<StartVerify>(_verify);
+  }
+}
+
+Future<void> _verify(
+    VerifyPaymentEvent event, Emitter<VerifyPaymentState> emit) async {
+  if (event is StartVerify) {
+    return ZarinPal().verificationPayment(
+      event.status!,
+      event.authority!,
+      event.paymentRequest!,
+      (isPaymentSuccess, refID, paymentRequest) => {
+        if (isPaymentSuccess)
+          emit(VerifyIsLoded(isPaymentSuccess, refID))
+        else
+          emit(VerifyError())
+      },
+    );
   }
 }

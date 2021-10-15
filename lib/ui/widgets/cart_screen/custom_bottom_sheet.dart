@@ -86,26 +86,27 @@ class CustomBottomSheet extends StatelessWidget {
               builder: (context, state) {
                 return ElevatedButton(
                   onPressed: () async {
-                    PaymentRequest _paymentRequest = PaymentRequest();
-                    _paymentRequest.setIsSandBox(true);
-                    _paymentRequest
-                        .setMerchantID("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
-                    _paymentRequest.setAmount(10000);
-                    _paymentRequest.setDescription('خرید تی شرت');
-                    _paymentRequest.setCallbackURL('zar://zarinpal.app');
-
-                    context
-                        .read<StartPaymentBloc>()
-                        .add(Start(_paymentRequest));
-
-                    context
-                        .read<PaymentRequestCubit>()
-                        .getPaymentRequest(_paymentRequest);
-
                     if (state is PaymentIsLoaded) {
                       await canLaunch(state.url!)
                           ? await launch(state.url!)
                           : throw 'Could not launch url';
+                    }
+
+                    if (state is PaymentNotStarted) {
+                      PaymentRequest _paymentRequest = PaymentRequest();
+                      _paymentRequest.setIsSandBox(true);
+                      _paymentRequest.setMerchantID(
+                          "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
+                      _paymentRequest.setAmount(10000);
+                      _paymentRequest.setDescription('خرید تی شرت');
+                      _paymentRequest.setCallbackURL('zar://zarinpal.app');
+                      context
+                          .read<PaymentRequestCubit>()
+                          .getPaymentRequest(_paymentRequest);
+
+                      context
+                          .read<StartPaymentBloc>()
+                          .add(Start(_paymentRequest));
                     }
                   },
                   child: state is PaymentIsLoading
