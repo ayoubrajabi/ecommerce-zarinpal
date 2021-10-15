@@ -21,7 +21,7 @@ class ProductDetailScreen extends StatelessWidget {
         textDirection: TextDirection.rtl,
         child: Scaffold(
           extendBodyBehindAppBar: true,
-          backgroundColor: _theme.scaffoldBackgroundColor,
+          backgroundColor: Colors.white,
           appBar: AppBar(
             leading: AppBarCustomButton(
               onPressed: () => Navigator.pop(context),
