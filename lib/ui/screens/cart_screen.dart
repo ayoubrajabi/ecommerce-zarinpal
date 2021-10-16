@@ -65,7 +65,7 @@ class _CartScreenState extends State<CartScreen> {
                 },
               ),
             ),
-            const CustomBottomSheet(),
+            CustomBottomSheet(),
           ],
         ),
       ),

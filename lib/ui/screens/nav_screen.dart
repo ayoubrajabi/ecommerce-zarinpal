@@ -11,10 +11,6 @@ class NavScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const SystemUiOverlayStyle(
-      statusBarColor: Colors.white,
-      statusBarIconBrightness: Brightness.dark,
-    );
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
         statusBarColor: Colors.white,

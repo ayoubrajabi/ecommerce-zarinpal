@@ -1,12 +1,16 @@
+import 'package:ecommerce_zarinpal/data/model/tshirt_model.dart';
 import 'package:ecommerce_zarinpal/logic/logic.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solid_bottom_sheet/solid_bottom_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zarinpal/zarinpal.dart';
 
+import '../widgets.dart';
+
 class CustomBottomSheet extends StatelessWidget {
-  const CustomBottomSheet({Key? key}) : super(key: key);
+  CustomBottomSheet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,13 +64,24 @@ class CustomBottomSheet extends StatelessWidget {
                       color: Colors.white24,
                       borderRadius: BorderRadius.circular(10.0),
                     ),
-                    child: const Center(
-                      child: Text(
-                        '100000  تومان',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12.0,
-                        ),
+                    child: Center(
+                      child: BlocBuilder<AddToBagCubit, List<TshirtModel>>(
+                        builder: (context, state) {
+                          int? sumPrice = state.isNotEmpty
+                              ? state
+                                  .map((info) => info.price)
+                                  .toList()
+                                  .reduce((a, b) => a! + b!)
+                              : 0;
+
+                          return Text(
+                            '$sumPrice  تومان',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.0,
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -84,53 +99,67 @@ class CustomBottomSheet extends StatelessWidget {
                 const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
             child: BlocBuilder<StartPaymentBloc, StartPaymentState>(
               builder: (context, state) {
-                return ElevatedButton(
-                  onPressed: () async {
-                    if (state is PaymentIsLoaded) {
-                      await canLaunch(state.url!)
-                          ? await launch(state.url!)
-                          : throw 'Could not launch url';
-                    }
+                if (state is PaymentIsLoading) {
+                  return CustomPaymentButton(
+                    child: const CircularProgressIndicator(),
+                    onPressed: () {},
+                  );
+                }
+                if (state is PaymentNotStarted) {
+                  return CustomPaymentButton(
+                    child: const Text('پرداخت با زرین پال'),
+                    onPressed: () async {
+                      final addToBagState = context.read<AddToBagCubit>().state;
 
-                    if (state is PaymentNotStarted) {
-                      PaymentRequest _paymentRequest = PaymentRequest();
-                      _paymentRequest.setIsSandBox(true);
-                      _paymentRequest.setMerchantID(
-                          "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
-                      _paymentRequest.setAmount(10000);
-                      _paymentRequest.setDescription('خرید تی شرت');
-                      _paymentRequest.setCallbackURL('zar://zarinpal.app');
+                      int? sumPrice = addToBagState.isNotEmpty
+                          ? addToBagState
+                              .map((info) => info.price)
+                              .toList()
+                              .reduce((a, b) => a! + b!)
+                          : 0;
+
+                      Payment _payment = Payment();
+                      final paymentRequest = _payment.request(sumPrice);
+
                       context
                           .read<PaymentRequestCubit>()
-                          .getPaymentRequest(_paymentRequest);
+                          .getPaymentRequest(paymentRequest!);
 
                       context
                           .read<StartPaymentBloc>()
-                          .add(Start(_paymentRequest));
-                    }
-                  },
-                  child: state is PaymentIsLoading
-                      ? const CircularProgressIndicator()
-                      : Text(
-                          'پرداخت با زرین پال',
-                          style: TextStyle(
-                            color: _theme.primaryColor,
-                          ),
-                        ),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.amber),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                    ),
-                  ),
-                );
+                          .add(Start(paymentRequest));
+                    },
+                  );
+                } else if (state is PaymentIsLoaded) {
+                  launchUrl() async {
+                    await canLaunch(state.url!)
+                        ? await launch(state.url!)
+                        : throw 'Could not launch url';
+                  }
+
+                  launchUrl();
+
+                  context.read<StartPaymentBloc>().add(Refresh());
+                }
+
+                return const SizedBox();
               },
             ),
           ),
         ),
       ),
     );
+  }
+}
+
+class Payment {
+  PaymentRequest? request(int? price) {
+    return PaymentRequest()
+      ..setIsSandBox(true)
+      ..setMerchantID("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx")
+      ..setAmount(price!)
+      ..setCallbackURL('zar://zarinpal.app')
+      ..setIsZarinGateEnable(true)
+      ..setDescription("پرداخت");
   }
 }
