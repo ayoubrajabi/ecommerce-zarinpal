@@ -1,8 +1,6 @@
 import 'package:ecommerce_zarinpal/data/model/tshirt_model.dart';
-import 'package:ecommerce_zarinpal/logic/logic.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconly/iconly.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -11,6 +9,7 @@ class ProductCardItem extends StatefulWidget {
   final String? productImageUrl;
   final int? productPrice;
   final TshirtModel state;
+  final void Function()? deleteButton;
 
   const ProductCardItem({
     Key? key,
@@ -18,6 +17,7 @@ class ProductCardItem extends StatefulWidget {
     required this.productImageUrl,
     required this.productPrice,
     required this.state,
+    this.deleteButton,
   }) : super(key: key);
 
   @override
@@ -134,12 +134,9 @@ class _ProductCardItemState extends State<ProductCardItem> {
                 height: 60.0,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: MaterialButton(
-                    onPressed: () {
-                      context.read<AddToBagCubit>().deleteFromBag(widget.state);
-                      setState(() {});
-                    },
-                    color: Colors.red.shade100.withAlpha(150),
+                  child: RawMaterialButton(
+                    onPressed: widget.deleteButton,
+                    fillColor: Colors.red.shade100.withAlpha(150),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),

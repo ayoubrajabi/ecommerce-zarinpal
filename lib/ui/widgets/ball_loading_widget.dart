@@ -9,7 +9,7 @@ class BallLoadingWidget extends StatelessWidget {
     return Center(
       child: SpinKitThreeBounce(
         duration: const Duration(milliseconds: 1500),
-        size: 50.0,
+        size: 40.0,
         color: Theme.of(context).primaryColor,
       ),
     );

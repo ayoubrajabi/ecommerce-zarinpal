@@ -101,13 +101,16 @@ class CustomBottomSheet extends StatelessWidget {
               builder: (context, state) {
                 if (state is PaymentIsLoading) {
                   return CustomPaymentButton(
-                    child: const CircularProgressIndicator(),
+                    child: const BallLoadingWidget(),
                     onPressed: () {},
                   );
                 }
                 if (state is PaymentNotStarted) {
                   return CustomPaymentButton(
-                    child: const Text('پرداخت با زرین پال'),
+                    child: Text(
+                      'پرداخت با زرین پال',
+                      style: TextStyle(color: _theme.primaryColor),
+                    ),
                     onPressed: () async {
                       final addToBagState = context.read<AddToBagCubit>().state;
 

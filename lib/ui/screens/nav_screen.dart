@@ -7,7 +7,13 @@ import 'package:iconly/iconly.dart';
 import 'screens.dart';
 
 class NavScreen extends StatelessWidget {
-  const NavScreen({Key? key}) : super(key: key);
+  NavScreen({Key? key}) : super(key: key);
+
+  final List<Widget>? _screens = [
+    const MainScreen(),
+    Container(color: Colors.white),
+    CartScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -19,20 +25,13 @@ class NavScreen extends StatelessWidget {
       child: SafeArea(
         child: Directionality(
           textDirection: TextDirection.rtl,
-          child: Scaffold(
-            body: BlocBuilder<NavbarCubit, int>(
-              builder: (context, navIndex) => IndexedStack(
-                index: navIndex,
-                children: [
-                  const MainScreen(),
-                  Container(
-                    color: Colors.white,
-                  ),
-                  CartScreen(),
-                ],
-              ),
-            ),
-            bottomNavigationBar: CustomNavigationBar(),
+          child: BlocBuilder<NavbarCubit, int>(
+            builder: (context, navIndex) {
+              return Scaffold(
+                body: _screens![navIndex],
+                bottomNavigationBar: CustomNavigationBar(),
+              );
+            },
           ),
         ),
       ),
@@ -68,11 +67,10 @@ class CustomNavigationBar extends StatelessWidget {
               (icon, activIcon) => MapEntry(
                 icon,
                 BottomNavigationBarItem(
-                    icon: Icon(
-                      icon,
-                    ),
-                    activeIcon: Icon(activIcon),
-                    label: ''),
+                  icon: Icon(icon),
+                  activeIcon: Icon(activIcon),
+                  label: '',
+                ),
               ),
             )
             .values

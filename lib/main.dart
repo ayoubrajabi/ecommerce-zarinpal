@@ -37,7 +37,7 @@ class EcommerceApp extends StatelessWidget {
                 status: status,
               );
             } else {
-              return const NavScreen();
+              return NavScreen();
             }
           },
         ),

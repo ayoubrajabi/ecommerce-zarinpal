@@ -1,9 +1,11 @@
+import 'package:ecommerce_zarinpal/constants/constants.dart';
 import 'package:ecommerce_zarinpal/logic/logic.dart';
 import 'package:ecommerce_zarinpal/ui/screens/screens.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 
 class CheckoutScreen extends StatefulWidget {
   final String? status;
@@ -49,13 +51,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     const Spacer(),
                     Padding(
                       padding: const EdgeInsets.all(30.0),
-                      child: CircleAvatar(
-                        backgroundColor: Colors.grey.shade50,
-                        radius: 60.0,
-                        child: const Icon(
-                          Icons.check,
-                          color: Colors.green,
-                          size: 70.0,
+                      child: SizedBox(
+                        height: 150.0,
+                        width: double.infinity,
+                        child: Lottie.asset(
+                          LottieAssets.checkMarkSuccess!,
+                          repeat: false,
                         ),
                       ),
                     ),
@@ -142,7 +143,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       onPressed: () => Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const NavScreen(),
+                          builder: (context) => NavScreen(),
                         ),
                       ),
                       style: ButtonStyle(
@@ -169,62 +170,73 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ),
               );
             } else if (verifyState is VerifyError) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: CircleAvatar(
-                      backgroundColor: Colors.grey.shade50,
-                      radius: 60.0,
-                      child: const Icon(
-                        Icons.close,
-                        color: Colors.red,
-                        size: 70.0,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 40.0,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: Text(
-                      'پرداخت اینترنتی شما با شکست مواجه شد',
-                      textAlign: TextAlign.right,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 40.0,
-                  ),
-                  ElevatedButton(
-                    onPressed: () => Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const NavScreen(),
-                      ),
-                    ),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        Colors.amber,
-                      ),
-                      shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
+              return Container(
+                color: Colors.white,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(30.0),
+                      child: SizedBox(
+                        height: 150.0,
+                        width: double.infinity,
+                        child: Lottie.asset(
+                          LottieAssets.errorMark!,
+                          repeat: false,
                         ),
                       ),
-                      padding: MaterialStateProperty.all(
-                        const EdgeInsets.symmetric(vertical: 20.0),
+                    ),
+                    const SizedBox(
+                      height: 40.0,
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 40.0),
+                      padding: const EdgeInsets.symmetric(vertical: 15.0),
+                      decoration: BoxDecoration(
+                          color: Colors.red.shade100.withAlpha(120),
+                          borderRadius: BorderRadius.circular(10.0)),
+                      child: Center(
+                        child: Text(
+                          'پرداخت اینترنتی شما با شکست مواجه شد',
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            color: Colors.red.shade800,
+                          ),
+                        ),
                       ),
                     ),
-                    child: const Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 70.0, vertical: 8.0),
-                      child: Text('بازگشت به صفحه اصلی'),
+                    const SizedBox(
+                      height: 90.0,
                     ),
-                  ),
-                ],
+                    ElevatedButton(
+                      onPressed: () => Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NavScreen(),
+                        ),
+                      ),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          Colors.amber,
+                        ),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                        ),
+                        padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(vertical: 20.0),
+                        ),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 70.0, vertical: 8.0),
+                        child: Text('بازگشت به صفحه اصلی'),
+                      ),
+                    ),
+                  ],
+                ),
               );
             }
 
