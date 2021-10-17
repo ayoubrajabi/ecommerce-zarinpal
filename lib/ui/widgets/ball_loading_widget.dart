@@ -6,11 +6,11 @@ class BallLoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: SpinKitThreeBounce(
-        duration: const Duration(milliseconds: 1500),
+        duration: Duration(milliseconds: 1500),
         size: 40.0,
-        color: Theme.of(context).primaryColor,
+        color: Colors.amber,
       ),
     );
   }

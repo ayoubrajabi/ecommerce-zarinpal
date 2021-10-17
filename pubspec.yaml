@@ -38,6 +38,7 @@ flutter:
 
   assets:
     - assets/lottie/
+    - assets/images/
 
   fonts:
     - family: Shabnam

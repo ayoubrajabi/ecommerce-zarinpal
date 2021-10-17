@@ -29,12 +29,12 @@ class _ProductCardItemState extends State<ProductCardItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 250.0,
+      height: 200.0,
       width: double.infinity,
-      margin: const EdgeInsets.all(15.0),
+      margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 7.0),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(15.0),
       ),
       child: Column(
         children: [
@@ -49,8 +49,8 @@ class _ProductCardItemState extends State<ProductCardItem> {
                   child: FadeInImage.memoryNetwork(
                     placeholder: kTransparentImage,
                     image: widget.productImageUrl!,
-                    width: 120.0,
-                    height: 160.0,
+                    width: 90.0,
+                    height: 130.0,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -58,8 +58,8 @@ class _ProductCardItemState extends State<ProductCardItem> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
-                  height: 160.0,
-                  width: 160.0,
+                  height: 130.0,
+                  width: 130.0,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -155,7 +155,7 @@ class _ProductCardItemState extends State<ProductCardItem> {
             thickness: 1.0,
           ),
           const SizedBox(
-            height: 10.0,
+            height: 3.0,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

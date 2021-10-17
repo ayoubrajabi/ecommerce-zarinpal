@@ -89,17 +89,26 @@ class _CartScreenState extends State<CartScreen> {
                         child: ListView.builder(
                           itemCount: addToBagState.length,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) => ProductCardItem(
-                            productImageUrl: addToBagState[index].imageUrl,
-                            productName: addToBagState[index].name,
-                            productPrice: addToBagState[index].price,
-                            state: addToBagState[index],
-                            deleteButton: () {
+                          itemBuilder: (context, index) => Dismissible(
+                            onDismissed: (direction) {
                               context
                                   .read<AddToBagCubit>()
                                   .deleteFromBag(state[index]);
                               setState(() {});
                             },
+                            key: UniqueKey(),
+                            child: ProductCardItem(
+                              productImageUrl: addToBagState[index].imageUrl,
+                              productName: addToBagState[index].name,
+                              productPrice: addToBagState[index].price,
+                              state: addToBagState[index],
+                              deleteButton: () {
+                                context
+                                    .read<AddToBagCubit>()
+                                    .deleteFromBag(state[index]);
+                                setState(() {});
+                              },
+                            ),
                           ),
                         ),
                       );

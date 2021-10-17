@@ -4,13 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solid_bottom_sheet/solid_bottom_sheet.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:zarinpal/zarinpal.dart';
 
-import '../widgets.dart';
+import '../../widgets.dart';
 
 class CustomBottomSheet extends StatelessWidget {
-  CustomBottomSheet({Key? key}) : super(key: key);
+  const CustomBottomSheet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +19,11 @@ class CustomBottomSheet extends StatelessWidget {
       left: 0.0,
       right: 0.0,
       child: SolidBottomSheet(
-        maxHeight: 90.0,
+        maxHeight: 400.0,
         elevation: 60.0,
         autoSwiped: true,
-        draggableBody: false,
+        draggableBody: true,
+        smoothness: Smoothness.medium,
         toggleVisibilityOnTap: true,
         controller: SolidController(),
         headerBar: Container(
@@ -66,13 +66,15 @@ class CustomBottomSheet extends StatelessWidget {
                     ),
                     child: Center(
                       child: BlocBuilder<AddToBagCubit, List<TshirtModel>>(
-                        builder: (context, state) {
-                          int? sumPrice = state.isNotEmpty
-                              ? state
-                                  .map((info) => info.price)
-                                  .toList()
-                                  .reduce((a, b) => a! + b!)
-                              : 0;
+                        builder: (context, addToBagState) {
+                          int? sumPrice = 0;
+
+                          if (addToBagState.isNotEmpty) {
+                            sumPrice = addToBagState
+                                .map((tshirt) => tshirt.price)
+                                .toList()
+                                .reduce((a, b) => a! + b!);
+                          }
 
                           return Text(
                             '$sumPrice  تومان',
@@ -90,66 +92,7 @@ class CustomBottomSheet extends StatelessWidget {
             ],
           ),
         ),
-        body: Container(
-          height: 50.0,
-          width: double.infinity,
-          color: _theme.primaryColor,
-          child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
-            child: BlocBuilder<StartPaymentBloc, StartPaymentState>(
-              builder: (context, state) {
-                if (state is PaymentIsLoading) {
-                  return CustomPaymentButton(
-                    child: const BallLoadingWidget(),
-                    onPressed: () {},
-                  );
-                }
-                if (state is PaymentNotStarted) {
-                  return CustomPaymentButton(
-                    child: Text(
-                      'پرداخت با زرین پال',
-                      style: TextStyle(color: _theme.primaryColor),
-                    ),
-                    onPressed: () async {
-                      final addToBagState = context.read<AddToBagCubit>().state;
-
-                      int? sumPrice = addToBagState.isNotEmpty
-                          ? addToBagState
-                              .map((info) => info.price)
-                              .toList()
-                              .reduce((a, b) => a! + b!)
-                          : 0;
-
-                      Payment _payment = Payment();
-                      final paymentRequest = _payment.request(sumPrice);
-
-                      context
-                          .read<PaymentRequestCubit>()
-                          .getPaymentRequest(paymentRequest!);
-
-                      context
-                          .read<StartPaymentBloc>()
-                          .add(Start(paymentRequest));
-                    },
-                  );
-                } else if (state is PaymentIsLoaded) {
-                  launchUrl() async {
-                    await canLaunch(state.url!)
-                        ? await launch(state.url!)
-                        : throw 'Could not launch url';
-                  }
-
-                  launchUrl();
-
-                  context.read<StartPaymentBloc>().add(Refresh());
-                }
-
-                return const SizedBox();
-              },
-            ),
-          ),
-        ),
+        body: CustomBottomSheetBody(),
       ),
     );
   }
@@ -164,5 +107,24 @@ class Payment {
       ..setCallbackURL('zar://zarinpal.app')
       ..setIsZarinGateEnable(true)
       ..setDescription("پرداخت");
+  }
+
+  void start(BuildContext context) {
+    final List<TshirtModel> addToBagState = context.read<AddToBagCubit>().state;
+
+    int? sumPrice = 0;
+
+    if (addToBagState.isNotEmpty) {
+      sumPrice = addToBagState
+          .map((tshirt) => tshirt.price)
+          .toList()
+          .reduce((a, b) => a! + b!);
+    }
+
+    final PaymentRequest? paymentRequest = request(sumPrice);
+
+    context.read<PaymentRequestCubit>().getPaymentRequest(paymentRequest!);
+
+    context.read<StartPaymentBloc>().add(Start(paymentRequest));
   }
 }
