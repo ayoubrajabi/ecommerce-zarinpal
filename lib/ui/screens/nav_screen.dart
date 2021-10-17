@@ -11,8 +11,8 @@ class NavScreen extends StatelessWidget {
 
   final List<Widget>? _screens = [
     const MainScreen(),
-    Container(color: Colors.white),
     CartScreen(),
+    UserScreen()
   ];
 
   @override
@@ -44,8 +44,8 @@ class CustomNavigationBar extends StatelessWidget {
 
   final _itemIcons = <IconData, IconData>{
     IconlyLight.home: IconlyBold.home,
-    IconlyLight.heart: IconlyBold.heart,
     IconlyLight.buy: IconlyBold.buy,
+    IconlyLight.user: IconlyBold.user_2,
   };
 
   @override

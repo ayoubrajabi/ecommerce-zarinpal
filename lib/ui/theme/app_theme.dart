@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppTheme {
   ThemeData? theme() {
     return ThemeData(
-      scaffoldBackgroundColor: Colors.grey.shade100,
+      scaffoldBackgroundColor: Colors.white,
       fontFamily: 'Shabnam',
       primaryColor: const Color(0xff0b1023),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(

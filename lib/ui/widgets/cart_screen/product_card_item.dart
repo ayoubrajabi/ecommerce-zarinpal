@@ -29,12 +29,15 @@ class _ProductCardItemState extends State<ProductCardItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200.0,
+      height: 210.0,
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 7.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.grey.shade50,
         borderRadius: BorderRadius.circular(15.0),
+        border: Border.all(
+          color: Colors.grey.shade100,
+        ),
       ),
       child: Column(
         children: [
@@ -45,12 +48,12 @@ class _ProductCardItemState extends State<ProductCardItem> {
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15.0),
+                  borderRadius: BorderRadius.circular(10.0),
                   child: FadeInImage.memoryNetwork(
                     placeholder: kTransparentImage,
                     image: widget.productImageUrl!,
-                    width: 90.0,
-                    height: 130.0,
+                    width: 120.0,
+                    height: 140.0,
                     fit: BoxFit.cover,
                   ),
                 ),

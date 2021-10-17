@@ -34,16 +34,22 @@ class _ItemsRailBarState extends State<ItemsRailBar> {
                     ? const Color(0xfffaeccd)
                     : Colors.white,
                 borderRadius: BorderRadius.circular(7.0),
+                border: Border.all(
+                  color: _info.name == itemRailData[indexSelected!].name
+                      ? Colors.amber.shade100
+                      : Colors.grey.shade200,
+                ),
               ),
               child: Center(
-                  child: Text(
-                _info.name!,
-                style: TextStyle(
-                  color: _info.name == itemRailData[indexSelected!].name
-                      ? Colors.orange.shade700
-                      : Colors.grey.shade400,
+                child: Text(
+                  _info.name!,
+                  style: TextStyle(
+                    color: _info.name == itemRailData[indexSelected!].name
+                        ? Colors.amber.shade800
+                        : Colors.grey,
+                  ),
                 ),
-              )),
+              ),
             ),
           );
         },

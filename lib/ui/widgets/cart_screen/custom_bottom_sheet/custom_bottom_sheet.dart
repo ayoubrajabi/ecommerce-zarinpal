@@ -58,7 +58,7 @@ class CustomBottomSheet extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    width: 180.0,
+                    width: 160.0,
                     height: 45.0,
                     decoration: BoxDecoration(
                       color: Colors.white24,

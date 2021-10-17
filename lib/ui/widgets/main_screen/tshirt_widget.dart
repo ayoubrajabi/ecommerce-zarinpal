@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-import '../widgets.dart';
-
-class TshirtCardWidget extends StatelessWidget {
+class TshirtCardWidget extends StatefulWidget {
   const TshirtCardWidget({
     Key? key,
     this.tshirtInfo,
@@ -15,18 +13,26 @@ class TshirtCardWidget extends StatelessWidget {
   final TshirtModel? tshirtInfo;
 
   @override
+  State<TshirtCardWidget> createState() => _TshirtCardWidgetState();
+}
+
+class _TshirtCardWidgetState extends State<TshirtCardWidget> {
+  bool? heartActive = false;
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ProductDetailScreen(tshirtInfo: tshirtInfo),
+          builder: (context) =>
+              ProductDetailScreen(tshirtInfo: widget.tshirtInfo),
         ),
       ),
       child: Container(
         margin: const EdgeInsets.all(15.0),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: const Color(0xfff7f7f7),
           border: Border.all(
             color: Colors.grey.shade100,
           ),
@@ -34,53 +40,60 @@ class TshirtCardWidget extends StatelessWidget {
         ),
         padding: const EdgeInsets.all(5.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Stack(
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10.0),
+              child: FadeInImage.memoryNetwork(
+                placeholder: kTransparentImage,
+                image: widget.tshirtInfo!.imageUrl!,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: 230,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 5.0, right: 10.0),
+              child: Text(
+                widget.tshirtInfo!.name!,
+                style: const TextStyle(
+                  fontSize: 11.0,
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: FadeInImage.memoryNetwork(
-                    placeholder: kTransparentImage,
-                    image: tshirtInfo!.imageUrl!,
-                    fit: BoxFit.contain,
-                    width: double.infinity,
-                    height: 230,
+                Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Container(
+                    padding: const EdgeInsets.all(5.0),
+                    decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        borderRadius: BorderRadius.circular(10.0)),
+                    child: Text(
+                      '${widget.tshirtInfo!.price!} تومان',
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 12.0,
+                      ),
+                    ),
                   ),
                 ),
-                const AppBarCustomButton(
-                  icon: IconlyLight.heart,
-                  color: Colors.transparent,
-                  iconColor: Color(0xff58485b),
-                  margin: EdgeInsets.only(left: 10.0),
-                ),
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      heartActive = !heartActive!;
+                    });
+                  },
+                  icon: Icon(
+                    heartActive! ? IconlyBold.heart : IconlyLight.heart,
+                    color: heartActive! ? Colors.red : Colors.black,
+                  ),
+                )
               ],
-            ),
-            Text(
-              tshirtInfo!.name!,
-              style: const TextStyle(
-                fontSize: 11.0,
-              ),
-            ),
-            Divider(
-              color: Colors.grey.shade200,
-            ),
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Container(
-                padding: const EdgeInsets.all(5.0),
-                decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(10.0)),
-                child: Text(
-                  '${tshirtInfo!.price!} تومان',
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 12.0,
-                  ),
-                ),
-              ),
             ),
           ],
         ),

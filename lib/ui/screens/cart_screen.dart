@@ -33,7 +33,7 @@ class _CartScreenState extends State<CartScreen> {
             color: Colors.white,
             icon: IconlyLight.bookmark,
             iconColor: Color(0xff58485b),
-            margin: EdgeInsets.only(left: 10.0),
+            margin: EdgeInsets.only(left: 20.0),
           ),
         ],
         toolbarHeight: 90.0,
@@ -84,7 +84,7 @@ class _CartScreenState extends State<CartScreen> {
                   child: BlocBuilder<AddToBagCubit, List<TshirtModel>>(
                     builder: (context, addToBagState) {
                       return SizedBox(
-                        height: addToBagState.length * 280.0 + 100.0,
+                        height: addToBagState.length * 220.0 + 100.0,
                         width: double.infinity,
                         child: ListView.builder(
                           itemCount: addToBagState.length,
