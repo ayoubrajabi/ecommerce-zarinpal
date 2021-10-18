@@ -15,9 +15,9 @@ class CustomBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final _theme = Theme.of(context);
     return Positioned(
-      bottom: 0.0,
-      left: 0.0,
-      right: 0.0,
+      bottom: 80.0,
+      left: 20.0,
+      right: 20.0,
       child: SolidBottomSheet(
         maxHeight: 400.0,
         elevation: 60.0,

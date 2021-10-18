@@ -25,13 +25,22 @@ class NavScreen extends StatelessWidget {
       child: SafeArea(
         child: Directionality(
           textDirection: TextDirection.rtl,
-          child: BlocBuilder<NavbarCubit, int>(
-            builder: (context, navIndex) {
-              return Scaffold(
-                body: _screens![navIndex],
-                bottomNavigationBar: CustomNavigationBar(),
-              );
-            },
+          child: Stack(
+            children: [
+              BlocBuilder<NavbarCubit, int>(
+                builder: (context, navIndex) {
+                  return Scaffold(
+                    body: _screens![navIndex],
+                  );
+                },
+              ),
+              Positioned(
+                bottom: 0.0,
+                left: 0.0,
+                right: 0.0,
+                child: CustomNavigationBar(),
+              ),
+            ],
           ),
         ),
       ),
@@ -52,29 +61,53 @@ class CustomNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final _bottomNavigationTheme = Theme.of(context).bottomNavigationBarTheme;
 
-    return BlocBuilder<NavbarCubit, int>(
-      builder: (context, navIndex) => BottomNavigationBar(
-        backgroundColor: _bottomNavigationTheme.backgroundColor,
-        elevation: _bottomNavigationTheme.elevation,
-        showSelectedLabels: _bottomNavigationTheme.showSelectedLabels,
-        showUnselectedLabels: _bottomNavigationTheme.showUnselectedLabels,
-        selectedItemColor: _bottomNavigationTheme.selectedItemColor,
-        unselectedItemColor: _bottomNavigationTheme.unselectedItemColor,
-        currentIndex: navIndex,
-        onTap: (index) => context.read<NavbarCubit>().emit(index),
-        items: _itemIcons
-            .map(
-              (icon, activIcon) => MapEntry(
-                icon,
-                BottomNavigationBarItem(
-                  icon: Icon(icon),
-                  activeIcon: Icon(activIcon),
-                  label: '',
-                ),
-              ),
-            )
-            .values
-            .toList(),
+    return Container(
+      height: 75.0,
+      width: double.infinity,
+      margin: const EdgeInsets.all(20.0),
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(context).primaryColor.withAlpha(150),
+            blurRadius: 30.0,
+            spreadRadius: 0.0,
+            offset: const Offset(0, 0),
+          ),
+          BoxShadow(
+            color: Theme.of(context).primaryColor.withAlpha(150),
+            blurRadius: 30.0,
+            spreadRadius: 0.0,
+            offset: const Offset(0, 20),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15.0),
+        child: BlocBuilder<NavbarCubit, int>(
+          builder: (context, navIndex) => BottomNavigationBar(
+            backgroundColor: _bottomNavigationTheme.backgroundColor,
+            elevation: _bottomNavigationTheme.elevation,
+            showSelectedLabels: _bottomNavigationTheme.showSelectedLabels,
+            showUnselectedLabels: _bottomNavigationTheme.showUnselectedLabels,
+            selectedItemColor: _bottomNavigationTheme.selectedItemColor,
+            unselectedItemColor: _bottomNavigationTheme.unselectedItemColor,
+            currentIndex: navIndex,
+            onTap: (index) => context.read<NavbarCubit>().emit(index),
+            items: _itemIcons
+                .map(
+                  (icon, activIcon) => MapEntry(
+                    icon,
+                    BottomNavigationBarItem(
+                      icon: Icon(icon),
+                      activeIcon: Icon(activIcon),
+                      label: '',
+                    ),
+                  ),
+                )
+                .values
+                .toList(),
+          ),
+        ),
       ),
     );
   }
