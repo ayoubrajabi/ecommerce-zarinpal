@@ -23,7 +23,7 @@ class CustomPaymentButton extends StatelessWidget {
       ),
       margin: const EdgeInsets.symmetric(
         horizontal: 30.0,
-        vertical: 10.0,
+        vertical: 5.0,
       ),
       child: ElevatedButton(
         onPressed: onPressed,

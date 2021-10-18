@@ -2,6 +2,7 @@ import 'package:beamer/beamer.dart';
 import 'package:ecommerce_zarinpal/ui/screens/nav_screen.dart';
 import 'package:ecommerce_zarinpal/ui/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uni_links/uni_links.dart';
 
@@ -9,6 +10,9 @@ import 'logic/logic.dart';
 import 'ui/screens/screens.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(EcommerceApp());
 }
 
@@ -34,6 +38,7 @@ class EcommerceApp extends StatelessWidget {
                 final authority = uri.queryParameters['Authority'];
 
                 return CheckoutScreen(
+                  beamerKey: beamerKey,
                   authority: authority,
                   status: status,
                 );

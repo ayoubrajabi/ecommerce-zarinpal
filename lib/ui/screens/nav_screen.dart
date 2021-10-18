@@ -9,17 +9,11 @@ import 'package:iconly/iconly.dart';
 import 'screens.dart';
 
 class NavScreen extends StatelessWidget {
-  NavScreen({Key? key, this.beamerKey}) : super(key: key);
+  const NavScreen({Key? key, this.beamerKey}) : super(key: key);
 
   final GlobalKey<BeamerState>? beamerKey;
 
   static const String path = 'nav-screen';
-
-  final List<Widget>? _screens = [
-    const MainScreen(),
-    CartScreen(),
-    UserScreen()
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -109,17 +103,17 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
     return Container(
       height: 75.0,
       width: double.infinity,
-      margin: const EdgeInsets.all(20.0),
+      margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).primaryColor.withAlpha(150),
+            color: Theme.of(context).primaryColor.withAlpha(100),
             blurRadius: 30.0,
             spreadRadius: 0.0,
             offset: const Offset(0, 0),
           ),
           BoxShadow(
-            color: Theme.of(context).primaryColor.withAlpha(150),
+            color: Theme.of(context).primaryColor.withAlpha(100),
             blurRadius: 30.0,
             spreadRadius: 0.0,
             offset: const Offset(0, 20),

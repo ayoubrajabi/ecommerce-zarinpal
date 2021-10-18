@@ -23,11 +23,14 @@ class _CustomBottomSheetBodyState extends State<CustomBottomSheetBody> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          const Text(
-            'روش پرداخت',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 11.0,
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              'روش پرداخت خود را انتخاب کنید :',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 11.0,
+              ),
             ),
           ),
           SizedBox(
@@ -62,7 +65,7 @@ class _CustomBottomSheetBodyState extends State<CustomBottomSheetBody> {
                               opacity: selectedIndex == index ? 1.0 : 0.4,
                               child: Image.asset(
                                 imageUrl[index],
-                                width: 260.0,
+                                width: 230.0,
                               ),
                             ),
                             if (selectedIndex == index)
@@ -137,6 +140,9 @@ class _CustomBottomSheetBodyState extends State<CustomBottomSheetBody> {
 
               return const SizedBox();
             },
+          ),
+          const SizedBox(
+            height: 30.0,
           ),
         ],
       ),

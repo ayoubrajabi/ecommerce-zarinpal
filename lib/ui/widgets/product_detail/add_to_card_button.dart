@@ -31,25 +31,35 @@ class AddToCardButton extends StatelessWidget {
           },
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(
-              const Color(0xfff99c00),
+              const Color(0xfff99c00).withAlpha(100),
             ),
+            elevation: MaterialStateProperty.all(0.0),
             shape: MaterialStateProperty.all(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15.0),
               ),
             ),
             padding: MaterialStateProperty.all(
-              const EdgeInsets.symmetric(vertical: 20.0),
+              const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
             ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
-              Text('افزودن به سبد خرید'),
+              Text(
+                'افزودن به سبد خرید',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12.0,
+                ),
+              ),
               SizedBox(
                 width: 10.0,
               ),
-              Icon(IconlyLight.bag),
+              Icon(
+                IconlyLight.bag,
+                color: Colors.black,
+              ),
             ],
           ),
         ),

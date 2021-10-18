@@ -16,7 +16,6 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _theme = Theme.of(context);
     return SafeArea(
       child: Directionality(
         textDirection: TextDirection.rtl,
@@ -84,14 +83,19 @@ class ProductDetailScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ProductPrice(
-                        tshirtInfo: tshirtInfo,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ProductPrice(
+                            tshirtInfo: tshirtInfo,
+                          ),
+                          AddToCardButton(
+                            tshirtInfo: tshirtInfo,
+                          ),
+                        ],
                       ),
                       const SelectProductSize(),
                       const ProductTabView(),
-                      AddToCardButton(
-                        tshirtInfo: tshirtInfo,
-                      ),
                     ],
                   ),
                 ),

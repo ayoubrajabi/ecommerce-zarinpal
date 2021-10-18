@@ -13,13 +13,17 @@ class ProductPrice extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: List<FittedBox>.generate(
-          2,
-          (i) => FittedBox(
-            child: Text(
-              i == 0 ? tshirtInfo!.name! : '${tshirtInfo!.price!}  تومان',
+      child: SizedBox(
+        height: 60.0,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: List<FittedBox>.generate(
+            2,
+            (i) => FittedBox(
+              child: Text(
+                i == 0 ? tshirtInfo!.name! : '${tshirtInfo!.price!}  تومان',
+              ),
             ),
           ),
         ),

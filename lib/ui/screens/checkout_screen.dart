@@ -1,6 +1,7 @@
+import 'package:beamer/src/beamer.dart';
 import 'package:ecommerce_zarinpal/constants/constants.dart';
 import 'package:ecommerce_zarinpal/logic/logic.dart';
-import 'package:ecommerce_zarinpal/ui/screens/screens.dart';
+import 'package:ecommerce_zarinpal/ui/router/router.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,11 +11,13 @@ import 'package:lottie/lottie.dart';
 class CheckoutScreen extends StatefulWidget {
   final String? status;
   final String? authority;
+  final GlobalKey<BeamerState>? beamerKey;
 
   const CheckoutScreen({
     Key? key,
     @required this.status,
     @required this.authority,
+    this.beamerKey,
   }) : super(key: key);
 
   @override
@@ -140,10 +143,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       height: 40.0,
                     ),
                     ElevatedButton(
-                      onPressed: () => Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => NavScreen(),
+                      onPressed: () => context.beamTo(
+                        NavLocation(
+                          beamerKey: widget.beamerKey,
                         ),
                       ),
                       style: ButtonStyle(
@@ -210,10 +212,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       height: 90.0,
                     ),
                     ElevatedButton(
-                      onPressed: () => Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => NavScreen(),
+                      // onPressed: () => Navigator.pushReplacement(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => NavScreen(),
+                      //   ),
+                      // ),
+                      onPressed: () => context.beamTo(
+                        NavLocation(
+                          beamerKey: widget.beamerKey,
                         ),
                       ),
                       style: ButtonStyle(

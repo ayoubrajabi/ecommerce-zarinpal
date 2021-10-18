@@ -85,7 +85,7 @@ class _CartScreenState extends State<CartScreen> {
                   child: BlocBuilder<AddToBagCubit, List<TshirtModel>>(
                     builder: (context, addToBagState) {
                       return SizedBox(
-                        height: addToBagState.length * 220.0 + 100.0,
+                        height: addToBagState.length * 220.0 + 200.0,
                         width: double.infinity,
                         child: ListView.builder(
                           itemCount: addToBagState.length,
