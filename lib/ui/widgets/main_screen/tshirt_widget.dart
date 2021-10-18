@@ -1,5 +1,5 @@
+import 'package:beamer/beamer.dart';
 import 'package:ecommerce_zarinpal/data/model/tshirt_model.dart';
-import 'package:ecommerce_zarinpal/ui/screens/product_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -22,13 +22,14 @@ class _TshirtCardWidgetState extends State<TshirtCardWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) =>
-              ProductDetailScreen(tshirtInfo: widget.tshirtInfo),
-        ),
-      ),
+      onTap: () => context.beamToNamed('product/${widget.tshirtInfo!.name}'),
+      // onTap: () => Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) =>
+      //         ProductDetailScreen(tshirtInfo: widget.tshirtInfo),
+      //   ),
+      // ),
       child: Container(
         margin: const EdgeInsets.all(15.0),
         decoration: BoxDecoration(

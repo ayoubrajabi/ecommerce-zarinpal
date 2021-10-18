@@ -11,6 +11,7 @@ class ProductDetailScreen extends StatelessWidget {
     @required this.tshirtInfo,
   }) : super(key: key);
 
+  static const String path = 'product-detail';
   final TshirtModel? tshirtInfo;
 
   @override

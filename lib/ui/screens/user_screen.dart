@@ -3,7 +3,7 @@ import 'package:iconly/iconly.dart';
 
 class UserScreen extends StatelessWidget {
   UserScreen({Key? key}) : super(key: key);
-
+  static const String path = 'user-screen';
   final _userItemsInfo = <String, IconData>{
     'مشخصات': IconlyLight.info_square,
     'آدرس ها': IconlyLight.location,

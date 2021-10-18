@@ -10,6 +10,7 @@ import 'package:lottie/lottie.dart';
 
 // ignore: use_key_in_widget_constructors
 class CartScreen extends StatefulWidget {
+  static const String path = 'cart-screen';
   @override
   State<CartScreen> createState() => _CartScreenState();
 }
