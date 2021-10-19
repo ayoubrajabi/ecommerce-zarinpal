@@ -48,4 +48,4 @@ for more information about build the app for ios :
 
 ## Licence
 
-MIT Licence 2021
+Apache License 2.0
