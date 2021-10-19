@@ -8,11 +8,13 @@ Ecommerce app with zarinpal payment
 
 ## installation
 
-```sh
-cd ecommerce
-git clone git@github.com:ayoubrajabi/ecommerce-zarinpal.git
-run flutter build apk
-```
+    mkdir ecommerce
+    cd ecommerce
+    git clone git@github.com:ayoubrajabi/ecommerce-zarinpal.git
+    flutter pub get
+    flutter build apk
+
+
 for more information about build the app for adndroid :
 [Build and release an Android app](https://flutter.dev/docs/deployment/android)
 
@@ -22,10 +24,11 @@ for more information about build the app for ios :
 <br />
 ## Features
 
-> . Use Beamer pakage (Based on Navigator 2.0) for navigation
-> . Bloc Pattern && state management
-> . use zarinpal pakage for payment
-> 
+
+    Use Beamer pakage (Based on Navigator 2.0) for navigation.
+    Bloc, Pattern and State Management.
+    Use zarinpal pakage for payment.
+
 <br />
 <br />
 ## Project Structuer
@@ -49,6 +52,14 @@ for more information about build the app for ios :
       ├─ utilities/
       └─main.dart
 
+
+<br />
+<br />
+
+#### Repository Visits
+<br />
+
+![visitors](https://visitor-badge.glitch.me/badge?page_id=ayoubrajabi.ecommerce-zarinpal)
 
 <br />
 <br />
