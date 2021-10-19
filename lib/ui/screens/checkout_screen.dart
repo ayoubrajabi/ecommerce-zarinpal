@@ -1,4 +1,4 @@
-import 'package:beamer/src/beamer.dart';
+import 'package:beamer/beamer.dart';
 import 'package:ecommerce_zarinpal/constants/constants.dart';
 import 'package:ecommerce_zarinpal/logic/logic.dart';
 import 'package:ecommerce_zarinpal/ui/router/router.dart';
