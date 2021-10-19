@@ -130,25 +130,23 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   } else {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
-                                        content: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: const [
-                                              Text(
-                                                'این محصول به سبد اضافه شده است.',
-                                                style: TextStyle(
-                                                  fontFamily: 'Shabnam',
-                                                ),
+                                        content: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: const [
+                                            Text(
+                                              'این محصول به سبد اضافه شده است.',
+                                              style: TextStyle(
+                                                fontFamily: 'Shabnam',
                                               ),
-                                              Icon(
-                                                IconlyLight.info_square,
-                                                color: Colors.white,
-                                              ),
-                                            ],
-                                          ),
+                                            ),
+                                            Icon(
+                                              IconlyLight.info_square,
+                                              color: Colors.white,
+                                            ),
+                                          ],
                                         ),
+                                        duration: const Duration(seconds: 2),
                                         behavior: SnackBarBehavior.floating,
                                         backgroundColor:
                                             Theme.of(context).primaryColor,

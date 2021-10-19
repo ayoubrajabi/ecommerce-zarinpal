@@ -12,7 +12,9 @@ class _SelectProductSizeState extends State<SelectProductSize> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const Divider(),
         const Text('انتخاب سایز'),
         SizedBox(
           height: 80.0,
