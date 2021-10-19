@@ -28,7 +28,6 @@ class EcommerceApp extends StatelessWidget {
       routes: {
         '*': (context, state) {
           final beamerKey = GlobalKey<BeamerState>();
-          // return NavScreen(beamerKey: beamerKey);
           return StreamBuilder(
             stream: uriLinkStream,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -66,23 +65,6 @@ class EcommerceApp extends StatelessWidget {
         backButtonDispatcher: BeamerBackButtonDispatcher(
           delegate: routerDelegate,
         ),
-        // home: StreamBuilder(
-        //   stream: uriLinkStream,
-        //   builder: (BuildContext context, AsyncSnapshot snapshot) {
-        //     if (snapshot.hasData) {
-        //       Uri uri = snapshot.data;
-        //       final status = uri.queryParameters['Status'];
-        //       final authority = uri.queryParameters['Authority'];
-
-        //       return CheckoutScreen(
-        //         authority: authority,
-        //         status: status,
-        //       );
-        //     } else {
-        //       return NavScreen();
-        //     }
-        //   },
-        // ),
       ),
     );
   }

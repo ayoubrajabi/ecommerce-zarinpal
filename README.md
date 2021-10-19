@@ -1,8 +1,8 @@
 # E-commerce
 
-ecommerce app with zarinpal payment
+Ecommerce app with zarinpal payment
 
-![enter image description here](https://s4.uupload.ir/files/ecommerce-zarinpal_ehy8.png)
+![enter image description here](https://s4.uupload.ir/files/ecommerce-zarinpal_4dj1.png)
 ![Generic badge](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white) ![Generic badge](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
 <br />
 
@@ -20,7 +20,14 @@ for more information about build the app for ios :
 [Build and release an IOS app](https://flutter.dev/docs/deployment/ios)
 <br />
 <br />
+## Features
 
+> . Use Beamer pakage (Based on Navigator 2.0) for navigation
+> . Bloc Pattern && state management
+> . use zarinpal pakage for payment
+> 
+<br />
+<br />
 ## Project Structuer
 
 
@@ -48,4 +55,4 @@ for more information about build the app for ios :
 
 ## Licence
 
-Apache License 2.0
+Apache Licence 2.0

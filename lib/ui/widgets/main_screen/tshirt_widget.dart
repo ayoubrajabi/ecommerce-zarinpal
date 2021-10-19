@@ -23,13 +23,6 @@ class _TshirtCardWidgetState extends State<TshirtCardWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => context.beamToNamed('product/${widget.tshirtInfo!.name}'),
-      // onTap: () => Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) =>
-      //         ProductDetailScreen(tshirtInfo: widget.tshirtInfo),
-      //   ),
-      // ),
       child: Container(
         margin: const EdgeInsets.all(15.0),
         decoration: BoxDecoration(
