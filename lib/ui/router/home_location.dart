@@ -10,7 +10,7 @@ class HomeLocation extends BeamLocation<BeamState> {
         BeamPage(
           key: const ValueKey(MainScreen.path),
           type: BeamPageType.sharedAxisTransion,
-          child: const MainScreen(),
+          child: MainScreen(),
         ),
         if (state.pathParameters.containsKey('name'))
           BeamPage(

@@ -3,7 +3,7 @@ import 'package:ecommerce_zarinpal/ui/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatelessWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  MainScreen({Key? key}) : super(key: key);
 
   static const String path = 'main-screen';
 

@@ -30,7 +30,6 @@ class NavScreen extends StatelessWidget {
               BlocBuilder<NavbarCubit, int>(
                 builder: (context, navIndex) {
                   return Scaffold(
-                    // body: _screens![navIndex],
                     body: Beamer(
                       key: beamerKey,
                       routerDelegate: BeamerDelegate(
