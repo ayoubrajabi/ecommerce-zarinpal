@@ -1,15 +1,13 @@
 import 'package:beamer/beamer.dart';
-import 'package:ecommerce_zarinpal/logic/logic.dart';
 import 'package:ecommerce_zarinpal/ui/router/router.dart';
 import 'package:ecommerce_zarinpal/ui/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'screens.dart';
 
 class NavScreen extends StatelessWidget {
-  const NavScreen({Key? key, this.beamerKey}) : super(key: key);
+  NavScreen({Key? key, this.beamerKey}) : super(key: key);
 
   final GlobalKey<BeamerState>? beamerKey;
 
@@ -27,24 +25,20 @@ class NavScreen extends StatelessWidget {
           textDirection: TextDirection.rtl,
           child: Stack(
             children: [
-              BlocBuilder<NavbarCubit, int>(
-                builder: (context, navIndex) {
-                  return Scaffold(
-                    body: Beamer(
-                      key: beamerKey,
-                      routerDelegate: BeamerDelegate(
-                        initialPath: MainScreen.path,
-                        locationBuilder: BeamerLocationBuilder(
-                          beamLocations: [
-                            HomeLocation(),
-                            CartLocation(),
-                            UserLocation(),
-                          ],
-                        ),
-                      ),
+              Scaffold(
+                body: Beamer(
+                  key: beamerKey,
+                  routerDelegate: BeamerDelegate(
+                    initialPath: MainScreen.path,
+                    locationBuilder: BeamerLocationBuilder(
+                      beamLocations: [
+                        HomeLocation(),
+                        CartLocation(),
+                        UserLocation(),
+                      ],
                     ),
-                  );
-                },
+                  ),
+                ),
               ),
               Positioned(
                 bottom: 0.0,

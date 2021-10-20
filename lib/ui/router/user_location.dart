@@ -7,7 +7,7 @@ class UserLocation extends BeamLocation<BeamState> {
   List<BeamPage> buildPages(BuildContext context, BeamState state) => [
         BeamPage(
           key: const ValueKey(UserScreen.path),
-          type: BeamPageType.noTransition,
+          type: BeamPageType.sharedAxisTransion,
           child: UserScreen(),
         ),
       ];

@@ -7,7 +7,7 @@ class CartLocation extends BeamLocation<BeamState> {
   List<BeamPage> buildPages(BuildContext context, BeamState state) => [
         BeamPage(
           key: const ValueKey(CartScreen.path),
-          type: BeamPageType.noTransition,
+          type: BeamPageType.sharedAxisTransion,
           child: CartScreen(),
         ),
       ];

@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:beamer/beamer.dart';
 import 'package:ecommerce_zarinpal/logic/logic.dart';
 import 'package:ecommerce_zarinpal/ui/router/router.dart';
@@ -65,39 +66,58 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15.0),
-        child: BlocBuilder<NavbarCubit, int>(
-          builder: (context, navIndex) => BottomNavigationBar(
-            backgroundColor: _bottomNavigationTheme.backgroundColor,
-            elevation: _bottomNavigationTheme.elevation,
-            showSelectedLabels: _bottomNavigationTheme.showSelectedLabels,
-            showUnselectedLabels: _bottomNavigationTheme.showUnselectedLabels,
-            selectedItemColor: _bottomNavigationTheme.selectedItemColor,
-            unselectedItemColor: _bottomNavigationTheme.unselectedItemColor,
-            currentIndex: _currentIndex,
-            onTap: (index) {
-              context.read<NavbarCubit>().emit(index);
-              _beamerDelegate.beamToNamed(
-                index == 0
-                    ? MainScreen.path
-                    : index == 1
-                        ? CartScreen.path
-                        : UserScreen.path,
-              );
-            },
-            items: _itemIcons
-                .map(
-                  (icon, activIcon) => MapEntry(
-                    icon,
-                    BottomNavigationBarItem(
-                      icon: Icon(icon),
-                      activeIcon: Icon(activIcon),
-                      label: '',
+        child: BottomNavigationBar(
+          backgroundColor: _bottomNavigationTheme.backgroundColor,
+          elevation: _bottomNavigationTheme.elevation,
+          showSelectedLabels: _bottomNavigationTheme.showSelectedLabels,
+          showUnselectedLabels: _bottomNavigationTheme.showUnselectedLabels,
+          selectedItemColor: _bottomNavigationTheme.selectedItemColor,
+          unselectedItemColor: _bottomNavigationTheme.unselectedItemColor,
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            _beamerDelegate.beamToNamed(
+              index == 0
+                  ? MainScreen.path
+                  : index == 1
+                      ? CartScreen.path
+                      : UserScreen.path,
+            );
+          },
+          items: _itemIcons
+              .map(
+                (icon, activIcon) => MapEntry(
+                  icon,
+                  BottomNavigationBarItem(
+                    icon: BlocBuilder<CartBloc, CartState>(
+                      builder: (context, state) {
+                        return Badge(
+                          badgeColor: Colors.white38,
+                          badgeContent: Text(
+                            state.tshirtModel!.length.toString(),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 10.0,
+                            ),
+                          ),
+                          elevation: 0.0,
+                          showBadge: icon == IconlyLight.buy &&
+                              state.tshirtModel!.isNotEmpty,
+                          padding: const EdgeInsets.all(7.0),
+                          position: const BadgePosition(
+                            start: 20.0,
+                            bottom: 0.0,
+                          ),
+                          child: Icon(icon),
+                        );
+                      },
                     ),
+                    activeIcon: Icon(activIcon),
+                    label: '',
                   ),
-                )
-                .values
-                .toList(),
-          ),
+                ),
+              )
+              .values
+              .toList(),
         ),
       ),
     );

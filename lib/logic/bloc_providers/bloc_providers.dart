@@ -4,12 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BlocProvidersList {
   final List<BlocProvider> _blocProviders = [
-    BlocProvider<NavbarCubit>(
-      create: (_) => NavbarCubit(),
-    ),
-    BlocProvider<AddToBagCubit>(
-      create: (_) => AddToBagCubit(),
-    ),
     BlocProvider<PaymentRequestCubit>(
       create: (_) => PaymentRequestCubit(),
     ),
@@ -18,6 +12,9 @@ class BlocProvidersList {
     ),
     BlocProvider<VerifyPaymentBloc>(
       create: (_) => VerifyPaymentBloc(),
+    ),
+    BlocProvider<CartBloc>(
+      create: (_) => CartBloc(),
     ),
   ];
 

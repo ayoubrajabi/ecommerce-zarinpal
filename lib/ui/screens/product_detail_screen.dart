@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconly/iconly.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class ProductDetailScreen extends StatefulWidget {
+class ProductDetailScreen extends StatelessWidget {
   const ProductDetailScreen({
     Key? key,
     @required this.tshirtInfo,
@@ -17,11 +17,6 @@ class ProductDetailScreen extends StatefulWidget {
   static const String path = 'product-detail';
   final TshirtModel? tshirtInfo;
 
-  @override
-  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
-}
-
-class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -39,18 +34,18 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               margin: const EdgeInsets.only(right: 10.0),
             ),
             actions: [
-              BlocBuilder<AddToBagCubit, List<TshirtModel>>(
+              BlocBuilder<CartBloc, CartState>(
                 builder: (context, state) {
                   return Badge(
                     badgeColor: Colors.redAccent,
                     badgeContent: Text(
-                      state.length.toString(),
+                      state.tshirtModel!.length.toString(),
                       style: const TextStyle(
                         color: Colors.white,
                       ),
                     ),
                     elevation: 0.0,
-                    showBadge: state.isNotEmpty,
+                    showBadge: state.tshirtModel!.isNotEmpty,
                     padding: const EdgeInsets.all(10.0),
                     position: const BadgePosition(
                       start: 0.0,
@@ -78,7 +73,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     padding: const EdgeInsets.all(20.0),
                     child: FadeInImage.memoryNetwork(
                       placeholder: kTransparentImage,
-                      image: widget.tshirtInfo!.imageUrl!,
+                      image: tshirtInfo!.imageUrl!,
                       fit: BoxFit.fitHeight,
                       width: double.infinity,
                       height: MediaQuery.of(context).size.height * 0.35,
@@ -115,60 +110,51 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           ProductPrice(
-                            tshirtInfo: widget.tshirtInfo,
+                            tshirtInfo: tshirtInfo,
                           ),
-                          AddToCardButton(
-                            onPressed: () {
-                              setState(
-                                () {
-                                  final state =
-                                      context.read<AddToBagCubit>().state;
-                                  if (!state.contains(widget.tshirtInfo)) {
-                                    context
-                                        .read<AddToBagCubit>()
-                                        .addToBag(widget.tshirtInfo!);
-                                  } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: const [
-                                            Text(
-                                              'این محصول به سبد اضافه شده است.',
-                                              style: TextStyle(
-                                                fontFamily: 'Shabnam',
-                                              ),
-                                            ),
-                                            Icon(
-                                              IconlyLight.info_square,
-                                              color: Colors.white,
-                                            ),
-                                          ],
-                                        ),
-                                        duration: const Duration(seconds: 2),
-                                        behavior: SnackBarBehavior.floating,
-                                        backgroundColor:
-                                            Theme.of(context).primaryColor,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        margin: EdgeInsets.only(
-                                          bottom: MediaQuery.of(context)
-                                                  .size
-                                                  .height -
-                                              80.0,
-                                          right: 20.0,
-                                          left: 20.0,
+                          AddToCardButton(onPressed: () {
+                            final state = context.read<CartBloc>().state;
+
+                            if (!state.tshirtModel!.contains(tshirtInfo)) {
+                              context.read<CartBloc>().add(AddToCart(
+                                    tshirtModel: tshirtInfo!,
+                                  ));
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: const [
+                                      Text(
+                                        'این محصول به سبد اضافه شده است.',
+                                        style: TextStyle(
+                                          fontFamily: 'Shabnam',
                                         ),
                                       ),
-                                    );
-                                  }
-                                },
+                                      Icon(
+                                        IconlyLight.info_square,
+                                        color: Colors.white,
+                                      ),
+                                    ],
+                                  ),
+                                  duration: const Duration(seconds: 2),
+                                  behavior: SnackBarBehavior.floating,
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  margin: EdgeInsets.only(
+                                    bottom: MediaQuery.of(context).size.height -
+                                        80.0,
+                                    right: 20.0,
+                                    left: 20.0,
+                                  ),
+                                ),
                               );
-                            },
-                          ),
+                            }
+                          }),
                         ],
                       ),
                       const SelectProductSize(),

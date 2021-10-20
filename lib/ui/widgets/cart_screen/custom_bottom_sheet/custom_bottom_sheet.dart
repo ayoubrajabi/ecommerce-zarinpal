@@ -1,4 +1,3 @@
-import 'package:ecommerce_zarinpal/data/model/tshirt_model.dart';
 import 'package:ecommerce_zarinpal/logic/logic.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -64,12 +63,12 @@ class CustomBottomSheet extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Center(
-                      child: BlocBuilder<AddToBagCubit, List<TshirtModel>>(
+                      child: BlocBuilder<CartBloc, CartState>(
                         builder: (context, addToBagState) {
                           int? sumPrice = 0;
 
-                          if (addToBagState.isNotEmpty) {
-                            sumPrice = addToBagState
+                          if (addToBagState.tshirtModel!.isNotEmpty) {
+                            sumPrice = addToBagState.tshirtModel!
                                 .map((tshirt) => tshirt.price)
                                 .toList()
                                 .reduce((a, b) => a! + b!);

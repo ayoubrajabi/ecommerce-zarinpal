@@ -26,6 +26,7 @@ dependencies:
   beamer: ^0.14.1
   animations: ^2.0.1
   badges: ^2.0.1
+  equatable: ^2.0.3
 
 dev_dependencies:
   flutter_test:
